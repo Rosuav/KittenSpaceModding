@@ -15,12 +15,18 @@ using System.Text;
 namespace RosuavKSAMod {
 	[StarMapMod]
 	public class RosuavKSAMod {
+		void log(string msg) {
+			using (FileStream fs = File.Open("rosuav.log", FileMode.Append, FileAccess.Write, FileShare.ReadWrite)) {
+				Byte[] data = new UTF8Encoding(true).GetBytes(msg);
+				fs.Write(data, 0, data.Length);
+				Byte[] nl = {10};
+				fs.Write(nl, 0, 1);
+			}
+		}
+
 		[StarMapImmediateLoad]
 		public void Init(Mod definingMod) {
-			using (FileStream fs = File.Open("rosuav.log", FileMode.Append, FileAccess.Write, FileShare.ReadWrite)) {
-				Byte[] data = new UTF8Encoding(true).GetBytes("Hello, world!\n");
-				fs.Write(data, 0, data.Length);
-			}
+			log("Hello, world");
 		}
 	}
 }
